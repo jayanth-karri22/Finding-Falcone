@@ -1,0 +1,47 @@
+.container {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    width:80%;
+    margin:0 auto;
+}
+
+.content {
+    background-color: rgb(46, 46, 46);
+    width:100%;
+    border-radius: 12px;
+    margin: 36px 0;
+}
+
+.text {
+    font-size:24px;
+    font-weight:lighter;
+    color:rgb(246, 246, 246);
+    text-align: left;
+    margin-left:12px;
+}
+
+.btn-findfalcone{
+color:black;
+text-transform: uppercase;
+text-decoration: none;
+background: rgb(246,246,246);
+padding: 20px;
+border-radius: 5px;
+display: inline-block;
+border: none;
+transition: all 0.4s ease 0s;
+margin:24px;
+border:1px solid black;
+}
+
+.btn-findfalcone:hover{
+background: rgb(46,46,46);
+letter-spacing: 1px;
+-webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+-moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+transition: all 0.4s ease 0s;
+color:white
+}
