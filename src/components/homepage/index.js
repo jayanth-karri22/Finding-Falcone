@@ -6,7 +6,7 @@ import Story from "./story";
 function HomePage() {
   return (
     <Fragment>
-      <Header />
+      <Header activeTab="story"/>
       <Story />
       <Footer />
     </Fragment>

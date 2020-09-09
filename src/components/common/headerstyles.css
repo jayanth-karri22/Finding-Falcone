@@ -42,6 +42,7 @@
     position: relative;
     cursor: pointer;
     font-size: 20px;
+    color:rgb(200, 200, 200);
 }
 
 .listItem::before{
@@ -57,7 +58,12 @@
   transition: all 0.3s ease-in-out 0s;
 }
 
-.active::before{
+.story::before{
+    transform: scaleX(1);
+    visibility: visible;
+}
+
+.findfalcone::before{
     transform: scaleX(1);
     visibility: visible;
 }
