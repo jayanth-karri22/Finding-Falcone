@@ -4,7 +4,7 @@ import "./footerstyles.css";
 function Footer() {
     return (
         <div className="footer">
-            <p>&copy; 2020 geektrust.in. All rights reserved.</p>
+            <p style={{fontSize:"14px"}}>&copy; 2020 geektrust.in. All rights reserved.</p>
         </div>
     )
 }
