@@ -1,6 +1,7 @@
 import React from "react";
 import "./homestyles.css";
 import Banner from "../../assets/images/Main-Banner.png";
+import { Link } from "react-router-dom";
 
 function Story() {
   return (
@@ -23,7 +24,11 @@ function Story() {
         </p>
       </div>
       <img src={Banner} alt="Queen Ai Flacone" style={{ width: "100%" }}></img>
-      <button className="btn-findfalcone">HELP KING SHAH FIND AL FALCONE</button>
+      <Link to="findfalcone">
+        <button className="btn-findfalcone">
+          HELP KING SHAH FIND AL FALCONE
+        </button>
+      </Link>
     </div>
   );
 }

@@ -37,7 +37,8 @@
 }
 
 .listItem {
-    padding:12px;
+    display: inline-block;
+    padding:6px 12px;
     text-decoration: none;
     position: relative;
     cursor: pointer;
