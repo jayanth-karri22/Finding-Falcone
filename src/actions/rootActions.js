@@ -13,3 +13,13 @@ export const getPlanets = () => dispatch => {
         })
     })
 }
+
+export const getVehicles = () => dispatch => {
+    return axios.get(VEHICLES_URL)
+    .then((response)=>{
+        dispatch({
+            type: GET_VEHICLES,
+            payload: response.data
+        })
+    })
+}

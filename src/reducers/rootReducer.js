@@ -1,7 +1,7 @@
 import {GET_PLANETS, GET_VEHICLES, GET_TOKEN, FIND_FALCONE} from "../actions/actionTypes";
 
 const initialState = {
-    planets: {},
+    planets: [],
     vehicles: {},
 }
 
@@ -11,6 +11,11 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 planets: action.payload
+            }
+        case GET_VEHICLES:
+            return {
+                ...state,
+                vehicles: action.payload
             }
         default:
             return state;    
