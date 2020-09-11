@@ -8,8 +8,13 @@ import "./index.css";
 function FindFalconePage() {
   const planets = useSelector((state) => state.planets);
   const vehicles = useSelector((state) => state.vehicles);
-  const [selectedOptions,setSelectedOptions] = useState({dropdown1:"",dropdown2:"",dropdown3:"",dropdown4:""})
-  
+  const [selectedOptions, setSelectedOptions] = useState({
+    destination1: "",
+    destination2: "",
+    destination3: "",
+    destination4: "",
+  });
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -18,17 +23,21 @@ function FindFalconePage() {
   }, []);
 
   const handleChangePlanet = (e) => {
-    let selectedOptionsCopy = {...selectedOptions,[e.target.name] : e.target.value};  
+    let selectedOptionsCopy = {
+      ...selectedOptions,
+      [e.target.name]: e.target.value,
+    };
     setSelectedOptions(selectedOptionsCopy);
   };
 
-  let selectedPlanets = Object.values(selectedOptions)
-  let options = {
-    dropdown1 : planets.filter((planet)=> !selectedPlanets.includes(planet.name) || planet.name === selectedOptions.dropdown1),
-    dropdown2 : planets.filter((planet)=> !selectedPlanets.includes(planet.name) || planet.name === selectedOptions.dropdown2),
-    dropdown3 : planets.filter((planet)=> !selectedPlanets.includes(planet.name) || planet.name === selectedOptions.dropdown3),
-    dropdown4 : planets.filter((planet)=> !selectedPlanets.includes(planet.name) || planet.name === selectedOptions.dropdown4), 
-  }
+  let selectedPlanets = Object.values(selectedOptions);
+
+  const getOptions = (destination) => {
+    return planets.filter(
+      (planet) =>
+        !selectedPlanets.includes(planet.name) || planet.name === destination
+    );
+  };
 
   return (
     <Fragment>
@@ -36,10 +45,16 @@ function FindFalconePage() {
       <div className="container">
         <h3>Select planets you want to search in:</h3>
         <div className="planets-container">
-            <SelectPlanet handleChangePlanet={handleChangePlanet} name="dropdown1" options={options.dropdown1} value={selectedOptions.dropdown1}/>
-            <SelectPlanet handleChangePlanet={handleChangePlanet} name="dropdown2" options={options.dropdown2} value={selectedOptions.dropdown2}/>
-            <SelectPlanet handleChangePlanet={handleChangePlanet} name="dropdown3" options={options.dropdown3} value={selectedOptions.dropdown3}/>
-            <SelectPlanet handleChangePlanet={handleChangePlanet} name="dropdown4" options={options.dropdown4} value={selectedOptions.dropdown4}/>
+          {Array(4)
+            .fill(undefined)
+            .map((_, id) => (
+              <SelectPlanet
+                handleChangePlanet={handleChangePlanet}
+                name={`destination${id+1}`}
+                options={getOptions(selectedOptions[`destination${id+1}`])}
+                value={selectedOptions[`destination${id+1}`]}
+              />
+            ))}
         </div>
       </div>
     </Fragment>

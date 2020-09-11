@@ -1,9 +1,11 @@
-import React from "react";
-import {useSelector} from 'react-redux';
+import React, { Fragment } from "react";
+import "./index.css";
 
 function SelectPlanet({options,handleChangePlanet,name,value}) {
   return (
-    <select onChange={(e)=>handleChangePlanet(e)} name={name} value={value}>
+    <div className="dropdown-container">
+    <p style={{display:"inline-block",margin:"10px"}}>{name}</p>
+    <select onChange={(e)=>handleChangePlanet(e)} name={name} value={value} className="dropdown">
     <option>Select</option>
       {options
         .map((planet, index) => (
@@ -12,6 +14,7 @@ function SelectPlanet({options,handleChangePlanet,name,value}) {
           </option>
         ))}
     </select>
+    </div>
   );
 }
 
