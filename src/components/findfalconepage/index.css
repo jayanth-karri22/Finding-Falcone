@@ -11,7 +11,7 @@
     display: flex;
     width: 80%;
     justify-content:center;
-    align-items:center;
+    align-items:flex-start;
 }
 
 .dropdown{
@@ -22,8 +22,8 @@
 
 .dropdown-container{
     display: flex;
+    flex:1;
     flex-direction: column;
-    width:"100%";
     justify-content: center;
     align-items: center;
     background-color: rgba(46,46,46);
@@ -31,4 +31,15 @@
     color:rgb(200,200,200);
     border-radius: 10px;
     padding:20px;
+    font-size: 16px;
+}
+
+.vehicles { 
+    margin-top: 12px;
+    padding: 12px;
+    border-top: 3px solid rgb(200,200,200);
+}
+
+.radio-input {
+    color:'red'
 }

@@ -52,7 +52,8 @@ function FindFalconePage() {
                 handleChangePlanet={handleChangePlanet}
                 name={`destination${id+1}`}
                 options={getOptions(selectedOptions[`destination${id+1}`])}
-                value={selectedOptions[`destination${id+1}`]}
+                currentPlanet={selectedOptions[`destination${id+1}`]}
+                vehicles={vehicles}
               />
             ))}
         </div>
