@@ -13,7 +13,7 @@ function SelectPlanet({
 }) {
 
   const dispatch = useDispatch();
-  const [currentVehicle, setCurrentVehicle] = useState();
+  const [currentVehicle, setCurrentVehicle] = useState("");
 
   const canVehicleReachPlanet = (vehicle) => {
     console.log(vehicle,currentVehicle)
@@ -27,7 +27,17 @@ function SelectPlanet({
 
   const handleChangeVehicle = e => {
     setCurrentVehicle(e.target.value)
-    dispatch(decreaseVehicleCount(e.target.value))
+    if(!currentVehicle){
+      dispatch(decreaseVehicleCount(e.target.value,()=>{
+        setCurrentVehicle(e.target.value)
+      }))
+    }
+    else{
+      dispatch(increaseVehicleCount(currentVehicle));
+      dispatch(decreaseVehicleCount(e.target.value),()=>{
+        setCurrentVehicle(e.target.value)
+      })
+    }
   }
 
 

@@ -25,13 +25,20 @@ export default (state = initialState, action) => {
         vehicles: action.payload,
       };
     case INCREASE_VEHICLE_COUNT:
-      state.vehicles.map((vehicle) => {
-        if (vehicle.name === action.payload) {
-          return { ...vehicle, total_no: vehicle.total_no + 1 };
-        } else {
-          return { ...vehicle };
-        }
-      });
+      return {
+        ...state,
+        vehicles: state.vehicles.map((vehicle)=>{
+            if(vehicle.name === action.payload){
+                return {
+                    ...vehicle,
+                    ["total_no"] : vehicle.total_no + 1
+                }
+            }
+            else{
+                return {...vehicle}
+            }
+        })
+      }
     case DECREASE_VEHICLE_COUNT:
       return {
         ...state,
