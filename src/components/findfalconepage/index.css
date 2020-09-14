@@ -16,7 +16,7 @@
 
 .dropdown{
     color:"white";
-    width: 100px;
+    width: 80%;
     padding:4px;
 }
 
@@ -38,8 +38,4 @@
     margin-top: 12px;
     padding: 12px;
     border-top: 3px solid rgb(200,200,200);
-}
-
-.radio-input {
-    color:'red'
 }

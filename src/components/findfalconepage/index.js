@@ -22,10 +22,10 @@ function FindFalconePage() {
     dispatch(getVehicles());
   }, []);
 
-  const handleChangePlanet = (e) => {
+  const handleChangePlanet = (value,name) => {
     let selectedOptionsCopy = {
       ...selectedOptions,
-      [e.target.name]: e.target.value,
+      [name]: value,
     };
     setSelectedOptions(selectedOptionsCopy);
   };
@@ -49,6 +49,7 @@ function FindFalconePage() {
             .fill(undefined)
             .map((_, id) => (
               <SelectPlanet
+                key={id}
                 handleChangePlanet={handleChangePlanet}
                 name={`destination${id+1}`}
                 options={getOptions(selectedOptions[`destination${id+1}`])}
