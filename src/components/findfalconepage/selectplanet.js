@@ -10,10 +10,13 @@ function SelectPlanet({
   name,
   currentPlanet,
   vehicles,
+  planets,
+  calculateTotalTime
 }) {
 
   const dispatch = useDispatch();
   const [currentVehicle, setCurrentVehicle] = useState("");
+  const [timeTaken, setTimeTaken] = useState(0);
 
   const canVehicleReachPlanet = (vehicle) => {
     console.log(vehicle,currentVehicle)
@@ -25,7 +28,7 @@ function SelectPlanet({
     }
   };
 
-  const handleChangeVehicle = e => {
+  const handleChangeVehicle = async e => {
     setCurrentVehicle(e.target.value)
     if(!currentVehicle){
       dispatch(decreaseVehicleCount(e.target.value,()=>{
@@ -38,6 +41,11 @@ function SelectPlanet({
         setCurrentVehicle(e.target.value)
       })
     }
+
+    let vehicleSpeed = vehicles.find((vehicle)=>vehicle.name === e.target.value).speed;
+    let planetDistance = planets.find((planet)=>planet.name === currentPlanet).distance;
+    await calculateTotalTime(timeTaken,planetDistance/vehicleSpeed);
+    setTimeTaken(planetDistance/vehicleSpeed);
   }
 
 
@@ -57,7 +65,7 @@ function SelectPlanet({
         <form className="vehicles">
             {vehicles.map((vehicle,index) => (
               <div className="radio" key={index}>
-                <label>
+                <label className={!canVehicleReachPlanet(vehicle) ? "radio-disabled":""}>
                   <input
                     style={{border: "10px solid #90DDD0"}}
                     type="radio"

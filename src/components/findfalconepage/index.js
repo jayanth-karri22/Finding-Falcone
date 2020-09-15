@@ -1,5 +1,6 @@
 import React, { useEffect, Fragment, useState } from "react";
 import Header from "../common/header";
+import Footer from "../common/footer";
 import { useSelector, useDispatch } from "react-redux";
 import { getPlanets, getVehicles } from "../../actions/rootActions";
 import SelectPlanet from "./selectplanet";
@@ -15,12 +16,18 @@ function FindFalconePage() {
     destination4: "",
   });
 
+  const [totalTime, setTotalTime] = useState(0);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getPlanets());
     dispatch(getVehicles());
   }, []);
+
+  const calculateTotalTime = (prevCalculated, currentCalculated) => {
+    setTotalTime(totalTime + currentCalculated - prevCalculated);
+  }
 
   const handleChangePlanet = (value,name) => {
     let selectedOptionsCopy = {
@@ -43,7 +50,7 @@ function FindFalconePage() {
     <Fragment>
       <Header activeTab="findfalcone" />
       <div className="container">
-        <h3>Select planets you want to search in:</h3>
+        <p style={{fontSize:"28px"}}>Select planets you want to search in:</p>
         <div className="planets-container">
           {Array(4)
             .fill(undefined)
@@ -55,9 +62,12 @@ function FindFalconePage() {
                 options={getOptions(selectedOptions[`destination${id+1}`])}
                 currentPlanet={selectedOptions[`destination${id+1}`]}
                 vehicles={vehicles}
+                planets={planets}
+                calculateTotalTime = {calculateTotalTime}
               />
             ))}
         </div>
+        <p>Time Taken : {totalTime}</p>
       </div>
     </Fragment>
   );
