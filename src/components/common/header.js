@@ -6,11 +6,11 @@ import "./headerstyles.css";
 function Header({ activeTab }) {
   return (
     <div className="header">
-      <div className="headerLeft">
-        <img src={Falcone} alt="Queen AiFalcone" className="falconImg" />
+      <div className="header-left">
+        <img src={Falcone} alt="Queen AiFalcone" className="falcon-img" />
         <h1 className="title-name">Finding Falcone</h1>
       </div>
-      <ul className="headerRight">
+      <ul className="header-right">
         <Tab activeTab={activeTab} linkto="/" tab="story">Story</Tab>
         <Tab activeTab={activeTab} linkto="/findfalcone" tab="findfalcone">Find Falcone</Tab>
       </ul>

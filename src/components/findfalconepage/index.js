@@ -27,9 +27,9 @@ function FindFalconePage() {
 
   const calculateTotalTime = (prevCalculated, currentCalculated) => {
     setTotalTime(totalTime + currentCalculated - prevCalculated);
-  }
+  };
 
-  const handleChangePlanet = (value,name) => {
+  const handleChangePlanet = (value, name) => {
     let selectedOptionsCopy = {
       ...selectedOptions,
       [name]: value,
@@ -46,11 +46,24 @@ function FindFalconePage() {
     );
   };
 
+  const handleReset = () => {
+    setSelectedOptions({
+      destination1: "",
+      destination2: "",
+      destination3: "",
+      destination4: "",
+    });
+    setTotalTime(0);
+    dispatch(getVehicles());
+  }
+
   return (
     <Fragment>
       <Header activeTab="findfalcone" />
       <div className="container">
-        <p style={{fontSize:"28px"}}>Select planets you want to search in:</p>
+        <p style={{ fontSize: "28px" }}>
+          Select planets you want to search in:
+        </p>
         <div className="planets-container">
           {Array(4)
             .fill(undefined)
@@ -58,17 +71,26 @@ function FindFalconePage() {
               <SelectPlanet
                 key={id}
                 handleChangePlanet={handleChangePlanet}
-                name={`destination${id+1}`}
-                options={getOptions(selectedOptions[`destination${id+1}`])}
-                currentPlanet={selectedOptions[`destination${id+1}`]}
+                name={`destination${id + 1}`}
+                options={getOptions(selectedOptions[`destination${id + 1}`])}
+                currentPlanet={selectedOptions[`destination${id + 1}`]}
                 vehicles={vehicles}
                 planets={planets}
-                calculateTotalTime = {calculateTotalTime}
+                calculateTotalTime={calculateTotalTime}
               />
             ))}
         </div>
-        <p>Time Taken : {totalTime}</p>
+        <div className="timer-container">
+          <div className="timer">
+            <p>Time Taken : {totalTime}</p>
+          </div>
+          <div className="button-container">
+            <button className="btn btn-disabled" type="button" disabled={true}>Find Falcone</button>
+            <button className="btn" onClick={handleReset}>Reset</button>
+          </div>
+        </div>
       </div>
+      <Footer />
     </Fragment>
   );
 }

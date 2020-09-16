@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 function Story() {
   return (
-    <div className="container">
+    <div className="homepage-container">
       <div className="content">
         <p className="text">
           In the planet of Lengaburu...in the distant distant galaxy of Tara B.
