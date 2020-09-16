@@ -2,7 +2,12 @@ import React, { useEffect, Fragment, useState } from "react";
 import Header from "../common/header";
 import Footer from "../common/footer";
 import { useSelector, useDispatch } from "react-redux";
-import { getPlanets, getVehicles } from "../../actions/rootActions";
+import {
+  getPlanets,
+  getVehicles,
+  increaseVehicleCount,
+  decreaseVehicleCount,
+} from "../../actions/rootActions";
 import SelectPlanet from "./selectplanet";
 import "./index.css";
 
@@ -10,6 +15,13 @@ function FindFalconePage() {
   const planets = useSelector((state) => state.planets);
   const vehicles = useSelector((state) => state.vehicles);
   const [selectedOptions, setSelectedOptions] = useState({
+    destination1: "",
+    destination2: "",
+    destination3: "",
+    destination4: "",
+  });
+
+  const [selectedVehicles, setSelectedVehicles] = useState({
     destination1: "",
     destination2: "",
     destination3: "",
@@ -25,9 +37,25 @@ function FindFalconePage() {
     dispatch(getVehicles());
   }, []);
 
-  const calculateTotalTime = (prevCalculated, currentCalculated) => {
-    setTotalTime(totalTime + currentCalculated - prevCalculated);
-  };
+  useEffect(()=>{
+    if(vehicles && vehicles.length){
+    calculateTime();
+    }
+  },[vehicles])
+
+  const calculateTime = () => {
+    let time = 0;
+    for (let i = 1; i <= 4; i++) {
+      let vehicleSpeed = vehicles.find((vehicle)=>vehicle.name === selectedVehicles[`destination${i}`])?.speed;
+      let planetDistance = planets.find(
+        (planet) => planet.name === selectedOptions[`destination${i}`]
+      )?.distance;
+      if (vehicleSpeed && planetDistance) {
+        time += (planetDistance/vehicleSpeed);
+      }
+    }
+    setTotalTime(time);
+  }
 
   const handleChangePlanet = (value, name) => {
     let selectedOptionsCopy = {
@@ -46,6 +74,26 @@ function FindFalconePage() {
     );
   };
 
+  const handleChangeVehicle = (e, name) => {
+    let selectedVehiclesCopy = {
+      ...selectedVehicles,
+      [name]: e.target.value,
+    };
+    setSelectedVehicles(selectedVehiclesCopy);
+    if (!selectedVehicles[name]) {
+      dispatch(
+        decreaseVehicleCount(e.target.value, () => {
+          setSelectedVehicles(selectedVehiclesCopy)
+        })
+      );
+    } else {
+      dispatch(increaseVehicleCount(selectedVehicles[name]));
+      dispatch(decreaseVehicleCount(e.target.value), () => {
+        setSelectedVehicles(selectedVehiclesCopy)
+      });
+    }
+  };
+
   const handleReset = () => {
     setSelectedOptions({
       destination1: "",
@@ -55,7 +103,7 @@ function FindFalconePage() {
     });
     setTotalTime(0);
     dispatch(getVehicles());
-  }
+  };
 
   return (
     <Fragment>
@@ -74,9 +122,10 @@ function FindFalconePage() {
                 name={`destination${id + 1}`}
                 options={getOptions(selectedOptions[`destination${id + 1}`])}
                 currentPlanet={selectedOptions[`destination${id + 1}`]}
+                currentVehicle={selectedVehicles[`destination${id + 1}`]}
                 vehicles={vehicles}
                 planets={planets}
-                calculateTotalTime={calculateTotalTime}
+                handleChangeVehicle={handleChangeVehicle}
               />
             ))}
         </div>
@@ -85,8 +134,12 @@ function FindFalconePage() {
             <p>Time Taken : {totalTime}</p>
           </div>
           <div className="button-container">
-            <button className="btn btn-disabled" type="button" disabled={true}>Find Falcone</button>
-            <button className="btn" onClick={handleReset}>Reset</button>
+            <button className="btn btn-disabled" type="button" disabled={true}>
+              Find Falcone
+            </button>
+            <button className="btn" onClick={handleReset}>
+              Reset
+            </button>
           </div>
         </div>
       </div>
