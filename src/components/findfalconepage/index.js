@@ -7,13 +7,20 @@ import {
   getVehicles,
   increaseVehicleCount,
   decreaseVehicleCount,
+  getToken,
+  findFalcone,
+  countTime
 } from "../../actions/rootActions";
 import SelectPlanet from "./selectplanet";
 import "./index.css";
+import { useHistory } from "react-router-dom";
 
 function FindFalconePage() {
   const planets = useSelector((state) => state.planets);
   const vehicles = useSelector((state) => state.vehicles);
+  const token = useSelector((state)=>state.token);
+  const totalTime = useSelector((state)=>state.totalTime);
+  const history = useHistory();
   const [selectedOptions, setSelectedOptions] = useState({
     destination1: "",
     destination2: "",
@@ -28,41 +35,42 @@ function FindFalconePage() {
     destination4: "",
   });
 
-  const [totalTime, setTotalTime] = useState(0);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getPlanets());
     dispatch(getVehicles());
+    dispatch(getToken());
   }, []);
 
-  useEffect(()=>{
-    if(vehicles && vehicles.length){
-    calculateTime();
+  useEffect(() => {
+    if (vehicles && vehicles.length) {
+      calculateTime();
     }
-  },[vehicles])
+  }, [vehicles, selectedOptions]);
 
   const calculateTime = () => {
     let time = 0;
     for (let i = 1; i <= 4; i++) {
-      let vehicleSpeed = vehicles.find((vehicle)=>vehicle.name === selectedVehicles[`destination${i}`])?.speed;
+      let vehicleSpeed = vehicles.find(
+        (vehicle) => vehicle.name === selectedVehicles[`destination${i}`]
+      )?.speed;
       let planetDistance = planets.find(
         (planet) => planet.name === selectedOptions[`destination${i}`]
       )?.distance;
       if (vehicleSpeed && planetDistance) {
-        time += (planetDistance/vehicleSpeed);
+        time += planetDistance / vehicleSpeed;
       }
     }
-    setTotalTime(time);
-  }
+    dispatch(countTime(time))
+  };
 
   const handleChangePlanet = (value, name) => {
     let selectedOptionsCopy = {
       ...selectedOptions,
       [name]: value,
     };
-    setSelectedOptions(selectedOptionsCopy);
+   setSelectedOptions(selectedOptionsCopy);
   };
 
   let selectedPlanets = Object.values(selectedOptions);
@@ -83,13 +91,13 @@ function FindFalconePage() {
     if (!selectedVehicles[name]) {
       dispatch(
         decreaseVehicleCount(e.target.value, () => {
-          setSelectedVehicles(selectedVehiclesCopy)
+          setSelectedVehicles(selectedVehiclesCopy);
         })
       );
     } else {
       dispatch(increaseVehicleCount(selectedVehicles[name]));
       dispatch(decreaseVehicleCount(e.target.value), () => {
-        setSelectedVehicles(selectedVehiclesCopy)
+        setSelectedVehicles(selectedVehiclesCopy);
       });
     }
   };
@@ -101,9 +109,37 @@ function FindFalconePage() {
       destination3: "",
       destination4: "",
     });
-    setTotalTime(0);
+    setSelectedVehicles({
+      destination1: "",
+      destination2: "",
+      destination3: "",
+      destination4: "",
+    });
+    dispatch(countTime(0));
     dispatch(getVehicles());
   };
+
+  const isFindFalconeValid = () => {
+    for(let i=1;i<=4;i++){
+      if(!selectedOptions[`destination${i}`] || !selectedVehicles[`destination${i}`]){
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const handleFindFalcone = () =>{
+    let requestBody = {
+      "token":token,
+      "planet_names": [],
+      "vehicle_names" : []
+    };
+    for(let i=1;i<=4;i++){
+      requestBody["planet_names"].push(selectedOptions[`destination${i}`]);
+      requestBody["vehicle_names"].push(selectedVehicles[`destination${i}`]);
+    }
+    dispatch(findFalcone(requestBody,history,totalTime));
+  }
 
   return (
     <Fragment>
@@ -134,7 +170,12 @@ function FindFalconePage() {
             <p>Time Taken : {totalTime}</p>
           </div>
           <div className="button-container">
-            <button className="btn btn-disabled" type="button" disabled={true}>
+            <button
+              className={isFindFalconeValid() ? "btn" : "btn btn-disabled"}
+              type="button"
+              disabled={isFindFalconeValid() ? false : true}
+              onClick={handleFindFalcone}
+            >
               Find Falcone
             </button>
             <button className="btn" onClick={handleReset}>

@@ -8,6 +8,7 @@
     font-size: 0.5rem;
     height: 10vh;
     flex-direction: row;
+    box-sizing: border-box;
 }
 
 .geektrust-link {

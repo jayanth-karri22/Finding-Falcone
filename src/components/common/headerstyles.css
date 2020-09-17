@@ -8,6 +8,8 @@
     padding:10px;
     font-weight: lighter;
     font-family: 'Courier New', Courier, monospace;
+    height: 10vh;
+    box-sizing: border-box;
 }
 
 .header-left {
