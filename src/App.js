@@ -3,8 +3,8 @@ import "./App.css";
 import HomePage from "./components/homepage";
 import FindFalconePage from "./components/findfalconepage/index";
 import ResultPage from "./components/resultpage/index";
-import NotFound from "./components/notfoundpage/index";
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import NotFoundPage from "./components/notfoundpage/index";
+import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 
 function App() {
   return (
@@ -12,7 +12,8 @@ function App() {
         <Route exact path="/" component={HomePage} />
         <Route path="/findfalcone" component={FindFalconePage} />
         <Route path="/result" component={ResultPage} />
-        <Route component={NotFound} />
+        <Route path="/404" exact={true} component={NotFoundPage} />
+        <Redirect to="/404" />
       </Router>
   );
 }
