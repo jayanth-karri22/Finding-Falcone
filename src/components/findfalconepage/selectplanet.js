@@ -1,6 +1,7 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment } from "react";
 import "./index.css";
 import Select from "react-select";
+import SelectVehicle from "./selectvehicle.js"
 
 function SelectPlanet({
   options,
@@ -15,7 +16,7 @@ function SelectPlanet({
     const planet = options.find((option) => option?.name === currentPlanet);
     if (
       vehicle?.max_distance < planet?.distance ||
-      (vehicle.total_no == 0 && vehicle.name != currentVehicle)
+      (vehicle.total_no === 0 && vehicle.name !== currentVehicle)
     ) {
       return false;
     } else {
@@ -31,12 +32,12 @@ function SelectPlanet({
         name={name}
         value={[
           {
-            label: currentPlanet || "Select Planet",
-            value: currentPlanet || null,
+            label: currentPlanet || 'Select Planet',
+            value: currentPlanet || '',
           },
         ]}
         className="dropdown"
-        options={options.map((option) => {
+        options={options?.map((option) => {
           return {
             label: option.name,
             value: option.name,
@@ -44,27 +45,7 @@ function SelectPlanet({
         })}
       ></Select>
       {currentPlanet ? (
-        <form className="vehicles">
-          {vehicles.map((vehicle, index) => (
-            <div className="radio" key={index}>
-              <label
-                className={
-                  !canVehicleReachPlanet(vehicle) ? "radio-disabled" : "radio"
-                }
-              >
-                <input
-                  style={{ border: "10px solid #90DDD0" }}
-                  type="radio"
-                  value={vehicle.name}
-                  name="vehicle"
-                  disabled={!canVehicleReachPlanet(vehicle)}
-                  onChange={(e) => handleChangeVehicle(e, name)}
-                />
-                {vehicle.name}-({vehicle.total_no})
-              </label>
-            </div>
-          ))}
-        </form>
+        <SelectVehicle vehicles={vehicles} canVehicleReachPlanet={canVehicleReachPlanet} handleChangeVehicle={handleChangeVehicle} name={name} currentVehicle={currentVehicle}/>
       ) : (
         <Fragment />
       )}

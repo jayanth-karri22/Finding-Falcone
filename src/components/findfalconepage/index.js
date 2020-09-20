@@ -9,30 +9,31 @@ import {
   decreaseVehicleCount,
   getToken,
   findFalcone,
-  countTime
+  countTime,
 } from "../../actions/rootActions";
 import SelectPlanet from "./selectplanet";
+import Controls from "./controls.js";
 import "./index.css";
 import { useHistory } from "react-router-dom";
 
 function FindFalconePage() {
   const planets = useSelector((state) => state.planets);
   const vehicles = useSelector((state) => state.vehicles);
-  const token = useSelector((state)=>state.token);
-  const totalTime = useSelector((state)=>state.totalTime);
+  const token = useSelector((state) => state.token);
+  const totalTime = useSelector((state) => state.totalTime);
   const history = useHistory();
   const [selectedOptions, setSelectedOptions] = useState({
-    destination1: "",
-    destination2: "",
-    destination3: "",
-    destination4: "",
+    destination1: '',
+    destination2: '',
+    destination3: '',
+    destination4: '',
   });
 
   const [selectedVehicles, setSelectedVehicles] = useState({
-    destination1: "",
-    destination2: "",
-    destination3: "",
-    destination4: "",
+    destination1: '',
+    destination2: '',
+    destination3: '',
+    destination4: '',
   });
 
   const dispatch = useDispatch();
@@ -62,7 +63,7 @@ function FindFalconePage() {
         time += planetDistance / vehicleSpeed;
       }
     }
-    dispatch(countTime(time))
+    dispatch(countTime(time));
   };
 
   const handleChangePlanet = (value, name) => {
@@ -70,7 +71,9 @@ function FindFalconePage() {
       ...selectedOptions,
       [name]: value,
     };
-   setSelectedOptions(selectedOptionsCopy);
+ 
+    setSelectedOptions(selectedOptionsCopy);
+    handleChangeVehicle("",name);
   };
 
   let selectedPlanets = Object.values(selectedOptions);
@@ -83,20 +86,24 @@ function FindFalconePage() {
   };
 
   const handleChangeVehicle = (e, name) => {
+    let value = ''
+    if(e){
+      value = e.target.value
+    }
     let selectedVehiclesCopy = {
       ...selectedVehicles,
-      [name]: e.target.value,
+      [name]: value,
     };
     setSelectedVehicles(selectedVehiclesCopy);
     if (!selectedVehicles[name]) {
       dispatch(
-        decreaseVehicleCount(e.target.value, () => {
+        decreaseVehicleCount(value, () => {
           setSelectedVehicles(selectedVehiclesCopy);
         })
       );
     } else {
       dispatch(increaseVehicleCount(selectedVehicles[name]));
-      dispatch(decreaseVehicleCount(e.target.value), () => {
+      dispatch(decreaseVehicleCount(value), () => {
         setSelectedVehicles(selectedVehiclesCopy);
       });
     }
@@ -104,42 +111,45 @@ function FindFalconePage() {
 
   const handleReset = () => {
     setSelectedOptions({
-      destination1: "",
-      destination2: "",
-      destination3: "",
-      destination4: "",
+      destination1: '',
+      destination2: '',
+      destination3: '',
+      destination4: '',
     });
     setSelectedVehicles({
-      destination1: "",
-      destination2: "",
-      destination3: "",
-      destination4: "",
+      destination1: '',
+      destination2: '',
+      destination3: '',
+      destination4: '',
     });
     dispatch(countTime(0));
     dispatch(getVehicles());
   };
 
   const isFindFalconeValid = () => {
-    for(let i=1;i<=4;i++){
-      if(!selectedOptions[`destination${i}`] || !selectedVehicles[`destination${i}`]){
+    for (let i = 1; i <= 4; i++) {
+      if (
+        !selectedOptions[`destination${i}`] ||
+        !selectedVehicles[`destination${i}`]
+      ) {
         return false;
       }
     }
     return true;
   };
 
-  const handleFindFalcone = () =>{
+  const handleFindFalcone = () => {
     let requestBody = {
-      "token":token,
-      "planet_names": [],
-      "vehicle_names" : []
+      token: token,
+      planet_names: [],
+      vehicle_names: [],
     };
-    for(let i=1;i<=4;i++){
+    for (let i = 1; i <= 4; i++) {
       requestBody["planet_names"].push(selectedOptions[`destination${i}`]);
       requestBody["vehicle_names"].push(selectedVehicles[`destination${i}`]);
     }
-    dispatch(findFalcone(requestBody,history,totalTime));
-  }
+    dispatch(findFalcone(requestBody, history, totalTime));
+  };
 
   return (
     <Fragment>
@@ -165,24 +175,13 @@ function FindFalconePage() {
               />
             ))}
         </div>
-        <div className="timer-container">
-          <div className="timer">
-            <p>Time Taken : {totalTime}</p>
-          </div>
-          <div className="button-container">
-            <button
-              className={isFindFalconeValid() ? "btn" : "btn btn-disabled"}
-              type="button"
-              disabled={isFindFalconeValid() ? false : true}
-              onClick={handleFindFalcone}
-            >
-              Find Falcone
-            </button>
-            <button className="btn" onClick={handleReset}>
-              Reset
-            </button>
-          </div>
-        </div>
+
+        <Controls
+          totalTime={totalTime}
+          isFindFalconeValid={isFindFalconeValid}
+          handleFindFalcone={handleFindFalcone}
+          handleReset={handleReset}
+        />
       </div>
       <Footer />
     </Fragment>
