@@ -10,7 +10,7 @@ import {
 
 const initialState = {
   planets: [],
-  vehicles: {},
+  vehicles: [],
   token: "",
   result:{},
   totalTime:0
