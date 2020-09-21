@@ -9,7 +9,7 @@ function NotFoundPage() {
     <Fragment>
       <Header />
       <div style={{ height: "80vh" }}>
-        <img src={NotFoundImg} style={{width:"100%"}} alt="Page not found"/>
+        <img src={NotFoundImg} style={{width:"50%"}} alt="Page not found"/>
         <p style={{ textAlign: "center" }}>
           <Link to="/">Go to Homepage</Link>
         </p>
