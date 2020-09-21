@@ -6,7 +6,7 @@ function Tab({activeTab,linkto,children,tab}) {
     <li className={`list-item ${activeTab===tab ? activeTab:""}`}>
       <Link
         to={linkto}
-        style={{ textDecoration: "none", color: "rgb(200,200,200)" }}
+        className="links"
       >
         {children}
       </Link>

@@ -10,9 +10,10 @@
 
 .planets-container{
     display: flex;
-    width: 80%;
+    width: 100%;
     justify-content:center;
     align-items:flex-start;
+    flex-wrap: wrap;
 }
 
 .dropdown{
@@ -93,4 +94,39 @@
 .btn-disabled {
     background-color: grey;
     cursor:not-allowed;
+}
+
+.title{
+    font-size: 28px;;
+}
+
+
+@media(max-width:1100px){
+    .dropdown-container{
+        max-width: 25%;
+    }
+
+    .container{
+        height: fit-content;
+        margin-bottom: 12px;
+    }
+}
+
+@media(max-width:600px){
+    .planets-container{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .dropdown-container{
+        max-width: 50%;
+    }
+
+    .timer-container {
+        width: 75%;
+    }
+
+    .title{
+        font-size: 16px;
+    }
 }

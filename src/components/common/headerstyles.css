@@ -77,3 +77,19 @@
   cursor: pointer;
 }
 
+.links{
+    text-decoration: none;
+    color: rgb(200,200,200);
+    font-size: 16px;
+}
+
+@media(max-width:760px){
+    .header-right{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .header{
+        height: fit-content;
+    }
+}

@@ -155,7 +155,7 @@ function FindFalconePage() {
     <Fragment>
       <Header activeTab="findfalcone" />
       <div className="container">
-        <p style={{ fontSize: "28px" }}>
+        <p className="title">
           Select planets you want to search in:
         </p>
         <div className="planets-container">
