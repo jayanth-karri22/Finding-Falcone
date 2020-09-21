@@ -7,7 +7,6 @@ import NotFoundPage from "./components/notfoundpage/index";
 import {
   BrowserRouter as Router,
   Route,
-  Redirect,
   Switch,
 } from "react-router-dom";
 
@@ -15,7 +14,6 @@ function App() {
   return (
     <Router>
       <Switch>
-        {" "}
         <Route exact path="/" component={HomePage} />
         <Route path="/findfalcone" component={FindFalconePage} />
         <Route path="/result" component={ResultPage} />

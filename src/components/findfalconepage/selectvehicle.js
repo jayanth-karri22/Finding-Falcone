@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 
 function SelectVehicle({canVehicleReachPlanet,vehicles,handleChangeVehicle,name,currentVehicle}){
     return(
@@ -25,6 +26,14 @@ function SelectVehicle({canVehicleReachPlanet,vehicles,handleChangeVehicle,name,
         ))}
       </form>
     )
+}
+
+SelectVehicle.propTypes = {
+  canVehicleReachPlanet: PropTypes.func.isRequired,
+  vehicles:PropTypes.array.isRequired,
+  handleChangeVehicle:PropTypes.func.isRequired,
+  name:PropTypes.string.isRequired,
+  currentVehicle:PropTypes.string.isRequired
 }
 
 export default SelectVehicle;

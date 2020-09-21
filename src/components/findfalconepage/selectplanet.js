@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import "./index.css";
 import Select from "react-select";
 import SelectVehicle from "./selectvehicle.js"
+import PropTypes from 'prop-types'
 
 function SelectPlanet({
   options,
@@ -37,7 +38,7 @@ function SelectPlanet({
           },
         ]}
         className="dropdown"
-        options={options?.map((option) => {
+        options={options && options.map((option) => {
           return {
             label: option.name,
             value: option.name,
@@ -51,6 +52,16 @@ function SelectPlanet({
       )}
     </div>
   );
+}
+
+SelectPlanet.propTypes = {
+  options:PropTypes.array.isRequired,
+  handleChangePlanet: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  currentPlanet: PropTypes.string.isRequired,
+  vehicles: PropTypes.array.isRequired,
+  currentVehicle: PropTypes.string.isRequired,
+  handleChangeVehicle: PropTypes.func.isRequired
 }
 
 export default SelectPlanet;

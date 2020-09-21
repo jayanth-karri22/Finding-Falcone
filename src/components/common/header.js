@@ -2,6 +2,7 @@ import React from "react";
 import Tab from "./tab";
 import Falcone from "../../assets/images/Al-Falcone.png";
 import "./headerstyles.css";
+import PropTypes from 'prop-types';
 
 function Header({ activeTab }) {
   return (
@@ -16,6 +17,10 @@ function Header({ activeTab }) {
       </ul>
     </div>
   );
+}
+
+Header.propTypes = {
+  activeTab: PropTypes.string
 }
 
 export default Header;

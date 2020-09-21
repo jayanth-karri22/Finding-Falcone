@@ -80,7 +80,7 @@
 .links{
     text-decoration: none;
     color: rgb(200,200,200);
-    font-size: 16px;
+    font-size: 20px;
 }
 
 @media(max-width:760px){
@@ -91,5 +91,8 @@
     }
     .header{
         height: fit-content;
+    }
+    .links{
+        font-size: 16px;
     }
 }

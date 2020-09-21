@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
 function Controls({totalTime, isFindFalconeValid, handleFindFalcone, handleReset}) {
   return (
@@ -21,6 +22,13 @@ function Controls({totalTime, isFindFalconeValid, handleFindFalcone, handleReset
       </div>
     </div>
   );
+}
+
+Controls.propTypes = {
+  totalTime: PropTypes.number.isRequired,
+  isFindFalconeValid: PropTypes.func.isRequired,
+  handleFindFalcone: PropTypes.func.isRequired,
+  handleReset: PropTypes.func.isRequired
 }
 
 export default Controls;
